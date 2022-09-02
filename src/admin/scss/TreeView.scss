@@ -1,0 +1,11 @@
+.top>button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-width: 1px 1px 1px 0px;
+}
+.top>button:first-child {
+    border-width: 1px 1px 1px 1px;
+}
+.top>button:last-child {
+    border-width: 1px 1px 1px 0;
+}
