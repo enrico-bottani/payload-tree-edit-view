@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../scss/TreeView.scss";
 import { useHistory } from 'react-router-dom';
 
@@ -26,34 +26,9 @@ function TreeView(props: Props) {
     newDocumentURL,
     hasCreatePermission,
   } = props;
-  
+  const [listView, setListView] = useState(true);
   return (
-    <div className={baseClass}>
-      <Meta
-        title={collection.labels.plural}
-      />
-      <Eyebrow />
-      <Gutter className={`${baseClass}__wrap`}>
-        <header className={`${baseClass}__header`}>
-          <h1>{pluralLabel}</h1>
-          {hasCreatePermission && (
-            <Pill to={newDocumentURL}>
-              Create New
-            </Pill>
-          )}
-          {description && (
-            <div className={`${baseClass}__sub-header`}>
-              <ViewDescription description={description} />
-            </div>
-          )}
-        </header>
-        <div className="mb-2">
-          <button className="pill pill--style-light pill--has-link pill--has-action mr-1">TreeView</button>
-          <button className="pill pill--style-dark pill--has-link pill--has-action">ListView</button>
-        </div>
-        <ListViewWrapper {...props}></ListViewWrapper>
-      </Gutter>
-    </div>
+    <div>I'm the treeview</div>
   );
 }
 export default TreeView;

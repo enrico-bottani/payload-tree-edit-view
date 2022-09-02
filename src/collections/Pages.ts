@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import TreeView from '../admin/components/views/TreeView';
+import SwitchView from '../admin/components/views/SwitchView';
 
 const Pages: CollectionConfig = {
     slug: 'pages',
@@ -7,7 +7,7 @@ const Pages: CollectionConfig = {
         useAsTitle: 'title',
         components:{
             views:{
-                List:TreeView
+                List:SwitchView
             }
         }
     },
