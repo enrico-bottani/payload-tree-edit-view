@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../scss/TreeView.scss";
 import { useHistory } from 'react-router-dom';
 
 import { useConfig } from 'payload/dist/admin/components/utilities/Config';
@@ -10,7 +9,7 @@ import { Props } from "payload/dist/admin/components/views/collections/List/type
 import ViewDescription from 'payload/dist/admin/components/elements/ViewDescription';
 import { Gutter } from 'payload/dist/admin/components/elements/Gutter';
 import ListViewWrapper from "./ListViewWrapper";
-import TreeView from "./TreeView";
+import TreeView from "./TreeView/TreeView";
 
 const baseClass = 'collection-list';
 function SwitchView(props: Props) {
@@ -27,7 +26,7 @@ function SwitchView(props: Props) {
     newDocumentURL,
     hasCreatePermission,
   } = props;
-  const [listView, setListView] = useState(true);
+  const [listView, setListView] = useState(false);
   return (
     <div className={baseClass}>
       <Meta

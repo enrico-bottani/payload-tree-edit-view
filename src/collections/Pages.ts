@@ -5,11 +5,12 @@ const Pages: CollectionConfig = {
     slug: 'pages',
     admin: {
         useAsTitle: 'title',
-        components:{
-            views:{
-                List:SwitchView
+        components: {
+            views: {
+                List: SwitchView
             }
-        }
+        },
+        
     },
     fields: [
         {

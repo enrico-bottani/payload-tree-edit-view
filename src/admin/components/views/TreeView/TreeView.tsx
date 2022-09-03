@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import "./TreeView.scss";
 import { useHistory } from 'react-router-dom';
 
 import { useConfig } from 'payload/dist/admin/components/utilities/Config';
@@ -11,7 +12,8 @@ import { Props } from "payload/dist/admin/components/views/collections/List/type
 import PerPage from 'payload/dist/admin/components/elements/PerPage';
 import { RelationshipProvider } from 'payload/dist/admin/components/views/collections/List/RelationshipProvider';
 
-function ListViewWrapper(props: Props) {
+const baseClass = 'collection-list';
+function TreeView(props: Props) {
     const baseClass = 'collection-list';
     const {
         collection,
@@ -37,13 +39,7 @@ function ListViewWrapper(props: Props) {
     const { routes: { admin } } = useConfig();
     const history = useHistory();
     return (<>
-        <ListControls
-            collection={collection}
-            columns={columnNames}
-            setColumns={setColumns}
-            enableColumns={Boolean(!upload)}
-            enableSort={Boolean(upload)}
-        />
+
         {(data.docs && data.docs.length > 0) && (
             <React.Fragment>
                 {!upload && (
@@ -54,13 +50,6 @@ function ListViewWrapper(props: Props) {
                         />
                     </RelationshipProvider>
                 )}
-                {upload && (
-                    <UploadGallery
-                        docs={data.docs}
-                        collection={collection}
-                        onCardClick={(doc) => history.push(`${admin}/collections/${slug}/${doc.id}`)}
-                    />
-                )}
             </React.Fragment>
         )}
         {data.docs && data.docs.length === 0 && (
@@ -70,11 +59,11 @@ function ListViewWrapper(props: Props) {
                     {' '}
                     {pluralLabel}
                     {' '}
-                    found. Either no
+                    found. No
                     {' '}
                     {pluralLabel}
                     {' '}
-                    exist yet or none match the filters you&apos;ve specified above.
+                    exist yet.
                 </p>
                 {hasCreatePermission && (
                     <Button
@@ -88,34 +77,6 @@ function ListViewWrapper(props: Props) {
                 )}
             </div>
         )}
-        <div className={`${baseClass}__page-controls`}>
-            <Paginator
-                limit={data.limit}
-                totalPages={data.totalPages}
-                page={data.page}
-                hasPrevPage={data.hasPrevPage}
-                hasNextPage={data.hasNextPage}
-                prevPage={data.prevPage}
-                nextPage={data.nextPage}
-                numberOfNeighbors={1}
-            />
-            {data?.totalDocs > 0 && (
-                <Fragment>
-                    <div className={`${baseClass}__page-info`}>
-                        {(data.page * data.limit) - (data.limit - 1)}
-                        -
-                        {data.totalPages > 1 && data.totalPages !== data.page ? (data.limit * data.page) : data.totalDocs}
-                        {' '}
-                        of
-                        {' '}
-                        {data.totalDocs}
-                    </div>
-                    <PerPage
-                        limits={collection?.admin?.pagination?.limits}
-                        limit={limit}
-                    />
-                </Fragment>
-            )}
-        </div></>)
+        </>)
 }
-export default ListViewWrapper;
+export default TreeView;
