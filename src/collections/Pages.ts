@@ -4,7 +4,7 @@ import SwitchView from '../admin/components/views/SwitchView';
 const Pages: CollectionConfig = {
     slug: 'pages',
     admin: {
-        useAsTitle: 'title',
+        useAsTitle: 'name',
         components: {
             views: {
                 List: SwitchView
@@ -14,7 +14,7 @@ const Pages: CollectionConfig = {
     },
     fields: [
         {
-            name: 'title',
+            name: 'name',
             type: 'text'
         },
         {
@@ -25,6 +25,12 @@ const Pages: CollectionConfig = {
             admin: {
                 isSortable: true,
             }
+        },
+        {
+            name: 'parent', // required
+            type: 'relationship', // required
+            relationTo: ["pages"],
+            hasMany: false,
         },
     ],
 }
