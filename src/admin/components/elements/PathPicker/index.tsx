@@ -7,59 +7,58 @@ import qs from 'qs';
 import { useConfig } from 'payload/dist/admin/components/utilities/Config';
 
 function PathPicker(props: Props) {
-    const history = useHistory();
-    const params = useSearchParams();
+
     const {
         node,
-        totalPages = null,
         page: currentPage,
-        hasPrevPage = false,
-        hasNextPage = false,
         collection: {
             slug
         },
-        prevPage = null,
-        nextPage = null,
-        numberOfNeighbors = 1,
         disableHistoryChange = false,
         onChange,
     } = props;
+    const history = useHistory();
     const { serverURL, routes: { api } } = useConfig();
     const [fetchURL, setFetchURL] = useState<string>(`${serverURL}${api}/${slug}`);
     const [path, setPath] = useState<any>();
 
-    const updatePage = (page) => {
+    const updatePage = (node) => {
+        const params = qs.parse(
+            location.search,
+            { ignoreQueryPrefix: true, depth: 10 },
+          );
         if (!disableHistoryChange) {
             const newParams = {
                 ...params,
             };
 
-            newParams.page = page;
+            newParams.node = node;
             history.push({ search: queryString.stringify(newParams, { addQueryPrefix: true }) });
         }
 
-        if (typeof onChange === 'function') onChange(page);
+        if (typeof onChange === 'function') onChange(currentPage);
     };
 
     async function getPathFromNode(nodeId: string): Promise<any> {
         const stringifiedQuery = qs.stringify({
             depth: 0,
         }, { addQueryPrefix: true });
-
-        return await fetch(`${fetchURL}/${nodeId}${stringifiedQuery}`).then(response => response.json());
+        if (nodeId)
+            return fetch(`${fetchURL}/${nodeId}/path`).then(response => response.json());
     }
-
-
 
     useEffect(() => {
         getPathFromNode(node)
-            .then(n => {
-                setPath(() => n)
-                console.log(n)
+            .then(body => {
+                var p = [];
+                for (let i = 0; i < body.response.length; i++) {
+                    p = [<a href='#' onClick={()=>updatePage(body.response[i].id)}><span>/{body.response[i].name}</span></a>, ...p]
+                }
+                setPath(() => p)
             });
     }, [node]);
 
-    if (path == null) return <></>
-    return (<p>{path.name}</p>)
+    if (path == undefined) return <></>
+    return (<div className='step-nav'>{path}</div>)
 }
 export default PathPicker;
