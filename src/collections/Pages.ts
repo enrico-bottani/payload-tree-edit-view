@@ -40,10 +40,21 @@ const Pages: CollectionConfig = {
             handler: async (req, res, next) => {
                 let response = [];
                 let page;
+
+                let nextId = req.params.id;
+
+                let idMap = new Set<string>;
+                idMap.add(nextId);
+
                 do {
-                    page = await req.payload.findByID({ id: req.params.id, collection: "pages" });
+                    page = await req.payload.findByID({ id: nextId, collection: "pages", depth: 0 });
+                    if (page == undefined) break;
                     response.push(page);
-                } while (page == null || page.parent == null)
+                    nextId = page.parent?.value;
+                    if (idMap.has(nextId)) break;
+                    idMap.add(nextId);
+                } while (nextId)
+
                 if (response) {
                     res.status(200).send({ response });
                 } else {

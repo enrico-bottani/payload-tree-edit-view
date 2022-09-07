@@ -33,24 +33,26 @@ function TreeView(props: Props) {
         hasCreatePermission,
     } = props;
 
-    const query = {
-        name: {
-            equals: 'home',
-        },
-    }
+    // Save fetchURL
     const { serverURL, routes: { api } } = useConfig();
-    const [fetchURL, setFetchURL] = useState<string>(`${serverURL}${api}/${slug}`);
+    const [fetchURL] = useState<string>(`${serverURL}${api}/${slug}`);
 
-    const { page, sort, where, node } = qs.parse(
+    const [urlParam, setUrlParam] = useState(qs.parse(
         useLocation().search,
         { ignoreQueryPrefix: true, depth: 10 },
-    );
-
+    ));
     const [data, setData] = useState<PaginatedDocs>();
+
+
     const getPosts = async (): Promise<Response> => {
+        const query = {
+            id: {
+                equals: urlParam.node,
+            },
+        }
         const stringifiedQuery = qs.stringify({
-            depth: 0,
-            page: page,
+            depth: 3,
+            page: urlParam.page,
             limit: limit,
             where: query
         }, { addQueryPrefix: true });
@@ -62,10 +64,10 @@ function TreeView(props: Props) {
     useEffect(() => {
         console.log("use effect");
         getPosts().then(response => response.json()).then(body => setData(body))
-    }, [page, limit])
+    }, [limit,useLocation().search])
 
     return (<>
-        <PathPicker {...props} node={node as string}/>
+        <PathPicker {...props} node={urlParam.node as string} />
         {(data && data.docs && data.docs.length > 0) && (
             <React.Fragment>
                 {!upload && (
