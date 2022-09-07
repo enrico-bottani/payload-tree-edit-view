@@ -15,7 +15,7 @@
     "generate:graphQLSchema": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema"
   },
   "dependencies": {
-    "payload": "^1.0.31",
+    "payload": "^1.0.33",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
   },

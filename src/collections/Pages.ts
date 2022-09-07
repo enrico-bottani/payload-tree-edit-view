@@ -10,7 +10,7 @@ const Pages: CollectionConfig = {
                 List: SwitchView
             }
         },
-        
+
     },
     fields: [
         {
@@ -33,5 +33,24 @@ const Pages: CollectionConfig = {
             hasMany: false,
         },
     ],
+    endpoints: [
+        {
+            path: '/:id/path',
+            method: 'get',
+            handler: async (req, res, next) => {
+                let response = [];
+                let page;
+                do {
+                    page = await req.payload.findByID({ id: req.params.id, collection: "pages" });
+                    response.push(page);
+                } while (page == null || page.parent == null)
+                if (response) {
+                    res.status(200).send({ response });
+                } else {
+                    res.status(404).send({ error: 'not found' });
+                }
+            }
+        }
+    ]
 }
 export default Pages;
