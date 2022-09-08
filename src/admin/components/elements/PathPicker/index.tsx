@@ -5,7 +5,8 @@ import queryString from 'qs';
 import React, { useState, useEffect } from 'react';
 import qs from 'qs';
 import { useConfig } from 'payload/dist/admin/components/utilities/Config';
-
+import Chevron from 'payload/dist/admin/components/icons/Chevron';
+import "./index.scss"
 function PathPicker(props: Props) {
 
     const {
@@ -26,7 +27,7 @@ function PathPicker(props: Props) {
         const params = qs.parse(
             location.search,
             { ignoreQueryPrefix: true, depth: 10 },
-          );
+        );
         if (!disableHistoryChange) {
             const newParams = {
                 ...params,
@@ -52,7 +53,10 @@ function PathPicker(props: Props) {
             .then(body => {
                 var p = [];
                 for (let i = 0; i < body.response.length; i++) {
-                    p = [<a href='#' onClick={()=>updatePage(body.response[i].id)}><span>/{body.response[i].name}</span></a>, ...p]
+                    p = [<button onClick={() => updatePage(body.response[i].id)}>
+                        <span>{body.response[i].name}</span>
+                        <Chevron />
+                    </button>, ...p]
                 }
                 setPath(() => p)
             });
