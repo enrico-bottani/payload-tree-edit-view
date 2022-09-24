@@ -25,3 +25,8 @@ export type ListPreferences = {
   limit: number
   sort: number
 }
+
+export type TreeViewURLParams = {
+  node: string
+  page: number;
+}

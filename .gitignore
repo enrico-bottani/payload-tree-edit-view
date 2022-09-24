@@ -165,3 +165,7 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode
 .vscode/launch.json
+
+
+## DEV Notes
+./notes.txt

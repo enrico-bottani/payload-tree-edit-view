@@ -1,0 +1,8 @@
+OSX
+---
+brew services start mongodb-community@6.0
+brew services stop mongodb-community@6.0
+
+API Call example
+---
+http://localhost:3000/api/pages/632c5cdca1fba09b762de5d7/path

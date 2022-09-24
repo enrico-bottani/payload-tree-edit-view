@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import SwitchView from '../admin/components/views/SwitchView';
+import SwitchView from '../admin/components/views/SwitchView/SwitchView';
 
 const Pages: CollectionConfig = {
     slug: 'pages',
@@ -43,7 +43,7 @@ const Pages: CollectionConfig = {
 
                 let nextId = req.params.id;
 
-                let idMap = new Set<string>;
+                let idMap = new Set<string>();
                 idMap.add(nextId);
 
                 do {
