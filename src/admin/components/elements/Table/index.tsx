@@ -36,7 +36,9 @@ const Table: React.FC<Props> = ({ columns, data }) => {
                     key={colIndex}
                     className={`cell-${col.accessor}`}
                   >
-                    {col.components.renderCell(row, row[col.accessor])}
+                    {col.accessor == "children" ? <a href='/admin/collections/pages?node=632c5ccaa1fba09b762de5b9'>
+                      {col.components.renderCell(row, row[col.accessor])}
+                    </a> : col.components.renderCell(row, row[col.accessor])}
                   </td>
                 ))}
               </tr>

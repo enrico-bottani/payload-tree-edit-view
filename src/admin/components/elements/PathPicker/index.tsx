@@ -23,7 +23,7 @@ function PathPicker(props: Props) {
     const [fetchURL, setFetchURL] = useState<string>(`${serverURL}${api}/${slug}`);
     const [path, setPath] = useState<any>();
 
-    const updatePage = (node) => {
+    const updatePage = (node: string) => {
         const params = qs.parse(
             location.search,
             { ignoreQueryPrefix: true, depth: 10 },
@@ -37,7 +37,7 @@ function PathPicker(props: Props) {
             history.push({ search: queryString.stringify(newParams, { addQueryPrefix: true }) });
         }
 
-        if (typeof onChange === 'function') onChange(currentPage);
+        if (typeof onChange === 'function') onChange(node);
     };
 
     async function getPathFromNode(nodeId: string): Promise<any> {
@@ -55,7 +55,7 @@ function PathPicker(props: Props) {
                 for (let i = 0; i < body.response.length; i++) {
                     p = [<button onClick={() => updatePage(body.response[i].id)}>
                         <span>{body.response[i].name}</span>
-                        <Chevron />
+                        {i !== 0 && <Chevron />}
                     </button>, ...p]
                 }
                 setPath(() => p)

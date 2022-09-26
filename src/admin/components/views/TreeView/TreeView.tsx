@@ -45,7 +45,8 @@ function TreeView(props: Props) {
     }, [limit, useLocation().search])
 
     return (<>
-        <PathPicker {...props} node={urlParam.node as string} />
+        <PathPicker {...props} node={urlParam.node as string}
+            onChange={(node) => setUrlParam(urlP => { return { page: urlP.page, node: node } })} />
         {(data && data.docs && data.docs.length > 0) && (
             <>
                 {!upload && (
